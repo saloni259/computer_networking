@@ -286,3 +286,163 @@ Recived : 2,1,4,3
 |Congestion Control| No Congestion Control|
 |Slower|Faster|
 |Used HTTP,HTTPS,FTP|Used DNS, Gaming Streaming|
+
+## **Application Layer**
+
+### ***HTTP - Hyper Text Transfer Protocol***
+**It is protocol used for communication between web Browser(Client) and Server.**
+
+***Example-***
+<br>
+**Enter :**
+**```www.amazon.com```**
+<br>
+**Browser Says :**
+```Please give me the home page```
+<br>
+**Server Replys :**
+```Here is the home page (HTML,CSS and some Images)```
+
+### ***HTTP used TCP*** 
+**Website does not afford missing data . so HTTP needs Reliability. It uses TCP.**
+
+### ***HTTP uses PORT number 80***
+
+***Othere Examples-***
+```
+80 -> HTTP
+443 -> HTTPS
+21 -> FTP
+25 -> SMTP
+```
+**PORT like a door when HTTP trafic arrives, it usually enters through door 80.**
+
+### ***HTTP is Stateless***
+
+**Stateless means - Server does not remember previous request. Treat each request as fresh**
+
+***Example-***
+<br>
+**Request1**
+```
+Client : Give me page number 1
+Server : Here is Page number 1
+```
+**server forgets**
+<br>
+**Request2**
+```
+Client : Gime me page number 2
+Server : Here is Page number 2
+```
+**Server treat this msg as completely new message**
+
+***NOTE-***
+<br>
+**Suppose visit ```amazon.com``` and add some product to card then if HTTP is stateless how Amazon remember the cart products ?**
+<br>
+
+***ANS-*** **Cookies and sessions**
+### ***Client Server Architecture***
+***Client  -*** **Web Browser, Mobile App**
+<br>
+***Server  -*** **Google Server,AmazonServer** 
+```
+Client ---Request---> Server
+Client <---Resposne--- Server
+```
+
+### ***HTTP Request Example***
+```
+GET /somedir/page.html HTTP/1.1
+Host: www.someschool.edu
+Connection: close
+User-agent: Mozilla/5.0
+Accept-language: fr
+```
+***Explanation***
+<br>
+**Code :**
+```
+GET/page.html
+```
+**Means :**
+```
+Please send me page.html
+```
+**Code :**
+```
+HOST: www.example.com
+```
+**Tells the server :**
+```
+Which website trying to access
+```
+**May be one server host multiple websites**
+<br>
+**Code :**
+```
+User-agent: Chrome
+```
+**Tells the server :**
+```
+I am Chrome Browser
+```
+**Code :**
+```
+Accept-language: fr
+```
+**Means :**
+```
+I prefer french language
+```
+**Server may send content accordingly**
+
+### ***HTTP Response Message***
+```
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 6821
+```
+**Code :**
+```
+HTTP/ 200 OK
+```
+**Means :**
+```
+Request successful
+```
+**Code :**
+```
+Content-Type: text/html
+```
+**Means :**
+```
+I am sending HTML data
+```
+**Other Examples :**
+```
+image/png
+application/pdf
+video/mp4
+```
+**Code :**
+```
+Content-Length: 6821
+```
+**Menas :**
+```
+Response size is 6821 bytes
+```
+
+### ***Other HTTP Responses***
+
+***200 OK -*** **Everything worked and website found**
+<br>
+***301 Moved Permanently -*** **Page has been shifted. from old website redirect to new website**
+<br>
+***400 Bad request*** - **Request format is wrong**
+<br>
+***404 Not found*** - **Request page does not exist**
+<br>
+***500 HTTP version does not Supported -*** **Sever does not support this http version**
