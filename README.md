@@ -132,4 +132,157 @@
 |Devloped by ISO|Devloped by DOD|
 
 
+## Transport Services Avaliable to Applications
 
+- **Reliable Data Transfer**
+- **Throughput**
+- **Timing**
+- **Security**
+
+### ***1. Reliable Data Transfer***
+**Data should reach the destination**
+- **without loss**
+- **without duplication**
+- **in correct order**
+
+***Examples-***
+<br>
+**sending bank transaction , Resume upload, Email must be reliable.
+Therefore these use TCP.**
+
+### ***2. Throughput***
+**Amount of data transfered per second**
+<br>
+**Measured in bps , kbps,mbps,gbps**
+
+***Exaamples-***
+<br>
+**100 MB file in 10sec so 10MB/sec**
+<br>
+**Higher Throughput = Faster Transfer**
+
+### ***3. Timing***
+
+**Data Should arrive on time**
+
+***Examples-*** **Video Call**
+<br>
+**If your friend's voice reaches after 20sec conversation becomes impossible**
+<br>
+**Timing is more important than perfect reliability here**
+<br>
+
+***Applications-***
+<br>
+**Zoom,Google meet,Online Gaming**
+
+### ***4. Security***
+**Protect data from attackers**
+
+***Examples-***
+<br>
+**While entering(Password,ATM pin) data must be encrypted**
+**HTTPS provides this**
+
+## **TCP Services**
+**TCP -** ***Transmission Control Protocol***
+<br>
+
+**2 Major Services :**
+- **Connection - Oriental Service**
+- **Reliable Data Transfer**
+
+### ***Connection - Oriented Service***
+**Before sending data, TCP establishes a connection. This is called the 3-way handshake**
+```text
+Client - SYN
+Server - SYN + ACK
+Client - ACK
+```
+**Connection Establish**
+
+### ***Reliable Data Transfer***
+**TCP guarantes No loss , No duplication , Correct Order**
+
+***Examples -***
+<br>
+**Pockets sent: 1 , 2, 3, 4 . if packet 3 is lost TCP notices and retransmit and recieve : 1 , 2, 3 ,4**
+
+### ***Full Duplex***
+**Both sides can send and recieve simultaneously.**
+
+***Examples -*** **Phone Call**
+<br>
+**You speak and listen together not like walkie - talkie**
+
+### ***TCP Congestion Control***
+**Congestion = too much traffic**
+
+***Examples -***
+<br>
+**Imagine a highway**
+<br>
+**Normally : 100 Cars**
+<br>
+**Trafic flows smoothly**
+<br>
+**Suddenly : 10000 cars**
+<br>
+**Trafic jam occurs**
+<br>
+**Similarity networks become congested TCP automatically slows transmission . This is called congestion control**
+
+## **UDP Services**
+**UDP -** ***User Datagram Protocol*** 
+- **Connectionless**
+- **Unreliable**
+- **No Congestion Control**
+
+### ***Connectionless***
+**No Handshake**
+
+***Examples -***
+<br>
+**Sending a letter. Simply drop it in the mailbox.No confirmation first.**
+
+### ***Unreliable***
+**UDP does not care if packets are lost**
+
+***Examples -*** **Voice Call**
+<br>
+**Suppose one voice call packet is lost . Instead of ```Hello..```
+we have ```He...lo```**
+<br>
+**Waiting for retransmission wuld create delay .So UDP avoit it.**
+
+### ***NO ordering Guarante***
+```
+Send : 1,2,3,4
+Recived : 2,1,4,3
+```
+**UDP does not fix this**
+
+### ***No Congestion Control***
+**UDP keeps sending**
+
+***Examples -***
+<br>
+**Imagine a person throwing ball continuously even if reciever is overloaded**
+
+***Why Use UDP?***
+- **Faster**
+- **Less overhead**
+- **Lower delay(less latency)**
+<br>
+
+**Applications - Video call,Live streaming,Online Games,DNS**
+
+### ***TCP VS UDP***
+|TCP|UDP|
+|---|---|
+|Connection Oriented|Connectionless|
+|Reliable|Unreliable|
+|Ordered Delivery|No Ordering Gurantee|
+|Congestion Control| No Congestion Control|
+|Slower|Faster|
+|Used HTTP,HTTPS,FTP|Used DNS, Gaming Streaming|
