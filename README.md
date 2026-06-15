@@ -446,3 +446,100 @@ Response size is 6821 bytes
 ***404 Not found*** - **Request page does not exist**
 <br>
 ***500 HTTP version does not Supported -*** **Sever does not support this http version**
+
+### ***FTP - File Transfer Protocol***
+**It is used to transfer files between two computers over a network.**
+<br>
+***Examples-***
+<br>
+```
+Your Laptop ----Resume.pdf----> Company Server
+```
+### ***FTP uses TCP***
+**File transfer must be reliable. If some packets are lost ,the file is corrupte. Therefore FTP uses TCP**
+### ***FTP uses two TCP connection***
+- **Control connection - Uses for comand(Username , Passwoprd , Commands)**
+<br>
+**PORT 21**
+<br>
+
+***Examples -***
+```
+USER saloni
+PASS mypassword
+GET resume.pdf
+PUT project.zip
+```
+- **Data connection - Uses for actual file transfer**
+<br>
+
+***Examples -***
+```
+resume.pdf
+project.zip
+image.png
+```
+
+### ***FTP Session Example***
+***STEP 1***
+```
+Client ----Port 21----> Server
+```
+**Control Connection Establish**
+<br>
+***STEP 2***
+```
+USER : Saloni
+```
+***STEP 3***
+```
+PASS: *******
+```
+***STEP 4***
+```
+RETR: notes.pdf
+```
+**RETR = Retrieve**
+<br>
+
+***STEP 5***
+<br>
+**FTP creates a new data connection**
+<br>
+
+***STEP 6***
+<br>
+**Server send ```notes.pdf``` through data connection**
+<br>
+
+***STEP 7***
+<br>
+**Data connection closes. Control connection remains active**
+
+### ***FTP is Statefull***
+**Server remembers information about user from past request**
+
+### ***HTTP vs FTP***
+|HTTP|FTP|
+|----|---|
+|Port 80|Port 21|
+|Web pages|File transfer|
+|Stateless|Statefull|
+|One TCP connection|Two TCP connection|
+
+### ***Important FTP commands***
+**USER -** **Tells server your username**
+<br>
+**PASS -** **Tells server your password**
+<br>
+**LIST -** **Shows all files in current directory**
+<br>
+**RETR -** **Retreive a file from server**
+<br>
+**STOR -** **Store a file on server**
+
+### ***FTP Reply Codes***
+**331 -** **User OK password required**
+<br>
+**425 -** **Can't open data connection**
+
