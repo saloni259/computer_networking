@@ -543,3 +543,59 @@ RETR: notes.pdf
 <br>
 **425 -** **Can't open data connection**
 
+### ***SMTP - Simple Mail Transfer Protocol***
+**It is an application layer for sending emails**
+<br>
+***Examples -***
+```
+From: saloni@gmail.com
+To: hr@company.com
+Subject: Internship Application
+```
+**SMTP is responsible for  moving this email from your mail server to reciept's mail server. PORT no 25**
+
+### ***How Email Travels ?***
+**Alice wants to send email Bob**
+<br>
+
+***STEP 1***
+<br>
+**Alice writes an email and send**
+<br>
+
+***STEP 2***
+<br>
+**Alice's email goes to Alice's mail server .Mail is temporarily stores in a queue**
+<br>
+
+***STEP 3***
+<br>
+**Alice Mail server opens TCP connetion with with Bob's mail server.**
+
+***STEP 4***
+<br>
+**Alice Mail server sends Email through TCP connection**
+
+***STEP 5***
+<br>
+**Bob's mail server recievs email and store in Bob's mail box**
+```
+Alice ---> Alice Mail's server ---SMTP--> Bob's mail server ----> Bob's Mail box ----> Bob read and reply
+```
+
+### ***SMTP uses Persistent Connection***
+**Persistent connection - connection remains open while multiple mail exchanged.**
+<br>
+**SMTP uses persistent connection for efficiency**
+
+### ***SMTP is a PUSH Protocol***
+**PUSH -** **SMTP actively pushes email to reciever mail server**
+<br>
+**PULL -** **Reciever request server to give msg. HTTP is a PULL protocol.** 
+### ***SMTP vs HTTP***
+|SMTP|HTTP|
+|----|----|
+Push control| Pull control|
+|Used for sending mails|Used for web pages|
+|PORT 25| PORT 80|
+|Persistent connection|Genarly use request - response model|
