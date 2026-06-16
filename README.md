@@ -700,3 +700,73 @@ What is the IP address of google.com
 ```
 120.250.xxx.xxx
 ```
+
+## **Peer to Peer(P2P) Applications and BitTorrent**
+
+**In P2P every computer can Recieve data and send data at the same time**
+```
+peer <----> peer
+```
+**But in Client Server**
+```
+Client -----> Server
+```
+
+### ***BitTorrent***
+**BitTorrent is a Peer-to-Peer file-sharing protocol in which a file is divided into chunks and users download different chunks from multiple peers simultaneously while also uploading chunks to others. This reduces server load and speeds up distribution**
+
+
+***Examples -***
+<br>
+**Download a  movie. Let's divide into 4 chunks**
+```
+Chunk A
+Chunk B
+chunk C
+Chunk D
+```
+**Different User download different chunks :**
+```
+Chunk A -> User 1
+Chunk B -> User 2
+Chunk C -> User 3
+Chunk D -> User 4
+```
+**Now :**
+```
+U1 has A
+U2 has B
+U3 has C
+U4 has D
+```
+**users shares each other :**
+```
+u1 <---> u2 <---> u3 <---> u4
+```
+**After sometime :**
+```
+U1 = A B C D
+U2 = A B C D
+U3 = A B C D
+U4 = A B C D
+```
+**It is faster bcz in normal client server architecture everyone dowload movie separately so it increases load on server. but in this process the dowloading and uploading occur simultaneously. So it is fast**
+
+#### ***Seeder (has complete file and can share it)***
+**After downloading 4 chunks of movie if u keep laptop online u can share chunks to others . so u are becomes Seeder**
+
+#### ***Leecher (Still downloading)***
+**If u have chunk A and B . But u need Chun C and D for complete download. so u are leecher**
+
+#### ***Rarest first (Download the rare Chunk first)***
+ 
+```
+chunk A - 100 users
+chunk B - 59 users
+Chunk C - 45 users
+Chunk D - 20 Users
+```
+**then download Chunk D first bcz if these 20 users go offline noone can complete download. So chooose rarest first**
+
+#### ***Tit for Tat (It prefers who sharing)***
+**BitTorrent uses the method that which user helps u. U help those users**
