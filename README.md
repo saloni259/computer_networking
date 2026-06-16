@@ -599,3 +599,83 @@ Push control| Pull control|
 |Used for sending mails|Used for web pages|
 |PORT 25| PORT 80|
 |Persistent connection|Genarly use request - response model|
+
+### ***POP3 and IMAP (Mail access protocols)***
+**SMTP - Send Mail**
+<br>
+**POP3 and IMAP - Recive mail**
+<br>
+
+**Mail Sending :**
+```
+sender device ----> SMTP ----> mail server
+```
+**Mail Reading :**
+```
+mail server ----> POP3/IMAP ----> reciever device
+```
+
+### ***How POP3(Post Office Protocol Version 3) Works***
+***STEP 1***
+<br>
+**Client connects to mail server through PORT 110**
+<br>
+***STEP 2***
+<br>
+**User logs in using Username and Password**
+<br>
+***STEP 3***
+<br>
+**Mail is download : ```Mail Server``` ----> ```Client Laptop```**
+<br>
+***STEP 4***
+<br>
+**Usually mails are removed from server or marked for deletion**
+
+### ***POP3 Phases***
+***Authorization -*** **Login**
+<br>
+***Examples -***
+```
+Username: Saloni
+Password: ****
+```
+***Transaction -*** **Operations**
+<br>
+***Examples -***
+```
+Download mail
+Delete mail
+Get statistics
+```
+***Update -*** **Session ends**
+<br>
+***Examples -***
+```
+Messages marked for deletion are removed
+```
+***POP3 Replies -***
+```
++OK - Ok response
+-ERR - Bad response
+```
+***Problem with POP3 -***
+<br>
+**If  use same email in all laptop,phone and tablet then phone may not see the same state this is inconvinient**
+
+### ***IMAP(Internal Mail Access Protocol)***
+**Mail remains on server only copy or required content is fetched**
+
+- ***IMAP remains folder -*** **Server remembers all folder**
+- ***IMAP maintains State -*** **Which is read or not read .This property does not work well in POP3**
+- ***IMAP provides partial download -*** **If a mail contaion a big video it helps to download only header not full content of mail. This is very usefull for slow network.**
+
+### ***POP3 VS IMAP***
+|POP3|IMAP|
+|----|----|
+|Download mails|Keeps mail on Server|
+|Simple|More Advanced|
+|Limited SynchroniZation|Full Synchronization|
+|Best for single device|Best for multiple devices|
+|PORT 110|Commonly PORT 143|
+|Usally  removes mails from server|Mails remains on server|
