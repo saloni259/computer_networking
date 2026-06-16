@@ -679,3 +679,24 @@ Messages marked for deletion are removed
 |Best for single device|Best for multiple devices|
 |PORT 110|Commonly PORT 143|
 |Usally  removes mails from server|Mails remains on server|
+
+## **DNS (Domain Name System)**
+**DNS translates website name to IP address. Uses PORT 53.**
+<br>
+***Examples -***
+<br>
+
+**You type :**
+```
+www.google.com
+```
+
+**Browser asks DNS :**
+```
+What is the IP address of google.com
+```
+
+**DNS Replies :**
+```
+120.250.xxx.xxx
+```
