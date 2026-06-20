@@ -770,3 +770,67 @@ Chunk D - 20 Users
 
 #### ***Tit for Tat (It prefers who sharing)***
 **BitTorrent uses the method that which user helps u. U help those users**
+
+## **DHCP(Dynamic Host Configuration Protocol)**
+
+**It solves the question** -
+<br>
+***"How does your laptop get an IP address when it connects to WiFi?"***
+#### ***Problem***
+**Suppose you buy a new laptop then you connect to your wifi. But question is that how your laptop know it's IP address, Subnet Mast,Default gateway,DNS server etc.. Means someone provide these things.**
+
+***Ans -*** **That someone is DHCP**
+
+### ***Information provided by DHCP***
+- ***IP address -*** **Device identity**
+- ***Subnet Mask -*** **Determines network and host portions**
+- ***Default Gateway -*** **Usually router. Needed to reach outside networks.**
+- ***DNS Server -*** **Usually translate from ```google.com``` to ```8.8.8.8```**
+
+
+### ***DORA Process***
+
+#### **D = Discover**
+**Laptop does not have an IP address. So it Broadcast :**
+```
+Anyone there?
+I need an IP address.
+```
+#### **O = Offer**
+**DHCP server replies :**
+```
+I can give you:
+192.168.1.10
+```
+#### **R = Request**
+**Laptop says :**
+```
+Yes,
+I want 192.168.1.10
+```
+#### **A = Acknowledgement**
+**Server says :**
+```
+Approved.
+Use this IP.
+```
+#### **Visual Flow**
+```
+Client
+   |
+Discover
+   ↓
+DHCP Server
+   |
+Offer
+   ↓
+Client
+   |
+Request
+   ↓
+DHCP Server
+   |
+ACK
+   ↓
+Client
+```
