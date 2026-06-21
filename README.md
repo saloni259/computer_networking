@@ -892,3 +892,42 @@ TCP
   ↓
 IP
 ```
+
+
+## **UDP Header**
+**UDP is connectionless and unreliable**
+<br>
+**Suppose PC send ```Hello``` to another PC. How does the reciever know :**
+```
+Which application sent it?
+Which application should receive it?
+How big is the message?
+Was it corrupted?
+```
+**That's why UDP adds a small header**
+
+### ***UDP Segment Structure***
+**UDP header has only 4 fields :**
+```
+--------------------------------
+| Source Port      | Dest Port |
+--------------------------------
+| Length           | Checksum  |
+--------------------------------
+| Data                         |
+--------------------------------
+```
+**Only 8 byets header**
+
+- ***Source Port -*** **Used to identify source application**
+<br>
+- ***Destination Port -*** **Tells reciever Which application should receive data?**
+- ***Length -*** **(Header + Data) in bytes**
+- ***Checksum -*** **sender send  ```Hello``` and during transmission it corrupted and recieves```Helxo```. so sender calculates a special value and Receiver recalculates it. If both match ```No error detected``` and if not ```Packet corrupted```.** 
+
+### ***UDP Applications***
+- ***DNS -*** **Small query and
+Need fast response**
+- ***DHCP -*** **When device first joins network .It doesn't even have an IP yet and UDP is simpler. So DHCP uses it**
+- ***NTP(Network Time Protocol) -***
+**Used to synchronize time**
