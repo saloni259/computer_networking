@@ -834,3 +834,61 @@ ACK
    ↓
 Client
 ```
+
+## ***HTTPS(HyperText Transfer Protocol Secure)***
+**HTTPS = HTTP + TLS(Transport Layer Security)**
+<br>
+**Uses PORT 443**
+<br>
+
+***Problem in HTTP -***
+<br>
+**Suppose logging into a website and entering username and password. that basiacly means :**
+```
+Client ---Username and Password---> Server
+```
+**Anyone sitting in between can read it. This is called Eavesdropping or Packet Sniffing** 
+
+***Solution -***
+<br>
+**HTTPS hash the password . evenif someone inside this intercepts it looks meaningless**
+```
+Real password : 123456
+Hash password : x#$%&8bw
+```
+### **What security does HTTPS provide?**
+- ***Confidentiality -*** **No body can read data in between client and srver**
+- ***Integrity*** - **No body can modify the data**
+- ***Authentication*** - **HTTPS verifies identity using certificates**
+
+
+### ***What is a certificate ?***
+**Certificate is like ID card. Website sends it's certificate and browser verifies it if valid connection build**
+
+### ***What is PKI?***
+**PKI is a system that manages digital certificates and public keys to enable secure communication.**
+<br>
+
+***Public Key -*** **Every browser uses it for an website**
+<br>
+***Private key -*** **Only website can decrypt using public key**
+
+### ***HTTP vs HTTPS***
+|HTTP|HTTPS|
+|----|-----|
+|Port 80|Port 443|
+|Not encrypted|Encrypted|
+|Less secure|More secure|
+|Vulnerable to sniffing|Protected|
+|Uses HTTP|Uses HTTP+TLS|
+
+***Note -***
+```
+HTTPS
+  ↓
+TLS
+  ↓
+TCP
+  ↓
+IP
+```
