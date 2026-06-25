@@ -931,3 +931,73 @@ Need fast response**
 - ***DHCP -*** **When device first joins network .It doesn't even have an IP yet and UDP is simpler. So DHCP uses it**
 - ***NTP(Network Time Protocol) -***
 **Used to synchronize time**
+
+
+## **Transport Layer**
+**The transport layer provides :**
+```
+Process-to-Process Communication
+Getting packet to destination computer
+Laptop → Google Server
+```
+**But Network Layer provides :**
+```
+Computer-to-Computer Communication
+Getting packet to correct application
+Google Server → Chrome Process
+```
+
+#### ***Problem -***
+**In laptop all applications(Chrome, Whatsapp,Zoom etc) are running. So all are using internet simultaneously. When packets arrive to laptop how does OS know whether it belongs to chrome, Whatsapp, Zoom.**
+#### ***Solution -***
+**Transport Layer provides logical communication between processes running on different hosts.**
+
+***Logical Communication -***
+<br>
+
+**Actually -**
+```
+Your Laptop
+     ↓
+Router
+     ↓
+ISP
+     ↓
+Many Routers
+     ↓
+Google Server
+```
+**But it feel like -**
+```
+Chrome ↔ Google
+```
+**This illusin is called ```Logical Communication```**
+
+### **Multiplexing and Demultiplexing**
+#### ***Multiplexing -***
+**Suppose all chrome,whatsapp,zoom wants to send data. Transport layer collects data from all applications combines them and sends them. This is called ```Multiplexing```**
+```
+Chrome   → Packet A
+WhatsApp → Packet B
+Spotify  → Packet C
+```
+#### ***Demultiplexing -***
+**After packets arrive at destination it divides and OS decides which packect goes to which application. This separation known as ```Demultiplexing```.**
+```
+Packet A → Chrome
+Packet B → WhatsApp
+Packet C → Spotify
+```
+
+### **Ports -**
+**IP Address identifies Computer similarly Port identifies Application**
+
+***Examples -***
+```
+Chrome      → Port 5000
+WhatsApp    → Port 5001
+Spotify     → Port 5002
+```
+
+### **Socket -**
+**Socket as ```Communication Endpoint```. Applications send/receive data through sockets.**
