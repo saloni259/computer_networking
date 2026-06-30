@@ -4931,3 +4931,250 @@ Functions:
 - Access Control
 ```
 
+
+# Physical Layer (Layer 1)
+
+Physical Layer is the lowest layer of the OSI model.
+
+It is responsible for:
+
+```text
+Transmission of bits over the communication medium.
+```
+
+---
+
+# What does Physical Layer do?
+
+The Physical Layer sends:
+
+```text
+0s and 1s
+```
+
+from one device to another through cables or wireless signals.
+
+Examples:
+
+* Copper Cable
+* Fiber Optic Cable
+* WiFi
+* Radio Waves
+
+---
+
+# Example
+
+Suppose your laptop wants to send:
+
+```text
+Hello
+```
+
+Computers cannot understand text directly.
+
+So it is converted into binary:
+
+```text
+01001000 01100101 01101100 01101100 01101111
+```
+
+The Physical Layer sends these bits through the communication medium.
+
+---
+
+# Data Unit of Physical Layer
+
+The Physical Layer sends data in the form of:
+
+```text
+Bits
+```
+
+Example:
+
+```text
+10110101
+```
+
+---
+
+# Transmission Media
+
+## Guided Media
+
+Signals travel through physical cables.
+
+Examples:
+
+* Twisted Pair Cable
+* Coaxial Cable
+* Fiber Optic Cable
+
+---
+
+## Unguided Media
+
+Signals travel through air.
+
+Examples:
+
+* WiFi
+* Bluetooth
+* Radio Waves
+* Infrared
+
+---
+
+# Devices Working at Physical Layer
+
+The main devices are:
+
+* Hub
+* Repeater
+
+---
+
+## Hub
+
+A Hub forwards incoming signals to all connected devices.
+
+It does not understand:
+
+* MAC Address
+* IP Address
+
+It only forwards electrical signals.
+
+---
+
+## Repeater
+
+A Repeater regenerates weak signals.
+
+Example:
+
+```text
+Long Distance
+↓
+Signal becomes weak
+↓
+Repeater strengthens signal
+↓
+Signal continues
+```
+
+---
+
+# Main Functions of Physical Layer
+
+## 1. Bit Transmission
+
+Transmits bits from one device to another.
+
+---
+
+## 2. Encoding
+
+Converts bits into electrical, optical, or radio signals.
+
+Example:
+
+```text
+1 -> High Voltage
+0 -> Low Voltage
+```
+
+---
+
+## 3. Data Rate Control
+
+Determines the speed of transmission.
+
+Examples:
+
+```text
+100 Mbps
+1 Gbps
+10 Gbps
+```
+
+---
+
+## 4. Physical Topology
+
+Defines how devices are physically connected.
+
+Examples:
+
+* Bus Topology
+* Star Topology
+* Ring Topology
+
+---
+
+## 5. Transmission Mode
+
+Defines the direction of communication.
+
+Examples:
+
+* Simplex
+* Half Duplex
+* Full Duplex
+
+---
+
+# Example of Communication Flow
+
+```text
+Application Layer
+        ↓
+Transport Layer
+        ↓
+Network Layer
+        ↓
+Data Link Layer
+        ↓
+Physical Layer
+        ↓
+Cable / WiFi
+        ↓
+Physical Layer
+        ↓
+Data Link Layer
+        ↓
+Network Layer
+        ↓
+Transport Layer
+        ↓
+Application Layer
+```
+
+---
+
+# Easy Way to Remember
+
+```text
+Physical Layer  -> Bits
+Data Link Layer -> Frames
+Network Layer   -> Packets
+Transport Layer -> Segments
+```
+
+---
+
+# Quick Revision
+
+```text
+Layer        -> Layer 1
+Data Unit    -> Bits
+Devices      -> Hub, Repeater
+
+Functions:
+- Bit Transmission
+- Encoding
+- Data Rate Control
+- Physical Topology
+- Transmission Mode
+```
