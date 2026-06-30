@@ -5178,3 +5178,246 @@ Functions:
 - Physical Topology
 - Transmission Mode
 ```
+
+# Network Topologies
+
+Network Topology defines:
+
+```text
+How devices are connected in a network.
+```
+
+In simple words:
+
+```text
+Topology = Structure or Layout of a Network
+```
+
+---
+
+# Bus Topology
+
+In Bus Topology, all devices share a single cable called:
+
+```text
+Backbone Cable
+```
+
+Example:
+
+```text
+PC1 ---- PC2 ---- PC3 ---- PC4 ---- PC5
+```
+
+When one device sends data, all devices receive it, but only the intended receiver accepts it.
+
+---
+
+## Advantages
+
+* Cheap
+* Easy to install
+* Requires less cable
+
+---
+
+## Disadvantages
+
+* If the backbone cable fails, the entire network stops.
+* Performance decreases as more devices are added.
+* Difficult to troubleshoot.
+
+---
+
+# Star Topology
+
+In Star Topology, all devices connect to a central device such as:
+
+* Switch
+* Hub
+
+Example:
+
+```text
+        PC1
+         |
+PC2 --- Switch --- PC3
+         |
+        PC4
+```
+
+If PC1 wants to send data to PC3:
+
+```text
+PC1
+ ↓
+Switch
+ ↓
+PC3
+```
+
+---
+
+## Advantages
+
+* Easy to manage.
+* Easy to add new devices.
+* Failure of one cable affects only one device.
+* Better performance.
+
+---
+
+## Disadvantages
+
+* If the central device fails, the entire network stops.
+* Requires more cable.
+
+---
+
+# Ring Topology
+
+In Ring Topology, devices are connected in the form of a circle.
+
+Example:
+
+```text
+PC1 --- PC2
+ |       |
+PC4 --- PC3
+```
+
+Data travels around the ring until it reaches the destination.
+
+---
+
+## Advantages
+
+* No collisions.
+* Predictable performance.
+
+---
+
+## Disadvantages
+
+* Failure of one device may affect the entire network.
+* Difficult to troubleshoot.
+
+---
+
+# Mesh Topology
+
+In Mesh Topology, every device is connected directly to every other device.
+
+Example:
+
+```text
+A ----- B
+|\     /|
+| \   / |
+|  \ /  |
+|  / \  |
+| /   \ |
+|/     \|
+C ----- D
+```
+
+---
+
+## Advantages
+
+* Very reliable.
+* Multiple paths exist between devices.
+* Failure of one connection does not stop communication.
+
+---
+
+## Disadvantages
+
+* Expensive.
+* Requires many cables.
+* Complex to manage.
+
+---
+
+# Tree Topology
+
+Tree Topology is a combination of:
+
+```text
+Star + Bus
+```
+
+Example:
+
+```text
+           Router
+             |
+        -------------
+        |           |
+      Switch1    Switch2
+      /   \       /   \
+    PC1  PC2    PC3  PC4
+```
+
+---
+
+## Advantages
+
+* Easy to expand.
+* Suitable for large organizations.
+
+---
+
+## Disadvantages
+
+* Failure of the root device affects many devices.
+* More complex than Star Topology.
+
+---
+
+# Comparison Table
+
+| Topology | Main Idea              | Failure Impact                        |
+| -------- | ---------------------- | ------------------------------------- |
+| Bus      | Single Backbone Cable  | Entire network fails                  |
+| Star     | Central Device         | Central device failure affects all    |
+| Ring     | Circular Connection    | One failure may affect entire network |
+| Mesh     | Multiple Connections   | Very reliable                         |
+| Tree     | Hierarchical Structure | Root failure affects many devices     |
+
+---
+
+# Most Commonly Used Topology
+
+```text
+Star Topology
+```
+
+Modern LAN networks mostly use Star Topology because they use switches as the central device.
+
+---
+
+# Easy Way to Remember
+
+```text
+Bus   -> One Cable
+Star  -> One Central Device
+Ring  -> Circle
+Mesh  -> Everyone Connected
+Tree  -> Hierarchy
+```
+
+---
+
+# Quick Revision
+
+```text
+Bus   -> Backbone Cable
+Star  -> Switch/Hub at Center
+Ring  -> Circular Connection
+Mesh  -> Direct Connection Between All Devices
+Tree  -> Combination of Star and Bus
+
+Most Commonly Used:
+Star Topology
+```
