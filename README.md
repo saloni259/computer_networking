@@ -4702,4 +4702,232 @@ Browser Rendering
 9. Response comes back.
 10. Browser renders the page.
 ```
+# Data Link Layer (Layer 2)
+
+The Data Link Layer is responsible for:
+
+```text
+Node to Node Delivery
+```
+
+which means communication between two devices in the same network.
+
+---
+
+# Example
+
+Suppose we have:
+
+```text
+Laptop A
+IP  = 192.168.1.10
+MAC = AA-AA-AA
+
+Laptop B
+IP  = 192.168.1.20
+MAC = BB-BB-BB
+```
+
+Both devices are connected through a switch.
+
+```text
+Laptop A
+    |
+  Switch
+    |
+Laptop B
+```
+
+Laptop A wants to send data to Laptop B.
+
+Network Layer identifies:
+
+```text
+Destination IP = 192.168.1.20
+```
+
+Data Link Layer identifies:
+
+```text
+Destination MAC = BB-BB-BB
+```
+
+The switch then forwards the frame to Laptop B.
+
+---
+
+# Why do we need Data Link Layer?
+
+Think of sending a letter.
+
+```text
+City Address  -> IP Address
+House Number  -> MAC Address
+```
+
+IP Address helps to find the correct network.
+
+MAC Address helps to find the correct device inside that network.
+
+---
+
+# Data Unit of Data Link Layer
+
+| Layer           | Data Unit |
+| --------------- | --------- |
+| Transport Layer | Segment   |
+| Network Layer   | Packet    |
+| Data Link Layer | Frame     |
+| Physical Layer  | Bits      |
+
+Data Link Layer sends data in the form of:
+
+```text
+Frames
+```
+
+---
+
+# Frame
+
+The Data Link Layer adds:
+
+* Source MAC Address
+* Destination MAC Address
+* Error Detection Information
+
+Example:
+
+```text
++------------------------------------------------+
+| Source MAC | Destination MAC | Data | CRC |
++------------------------------------------------+
+```
+
+This complete structure is called a:
+
+```text
+Frame
+```
+
+---
+
+# Error Detection
+
+Suppose during transmission:
+
+```text
+10110101
+```
+
+becomes:
+
+```text
+10100101
+```
+
+because of noise in the channel.
+
+The Data Link Layer detects this error using:
+
+```text
+CRC (Cyclic Redundancy Check)
+```
+
+If an error is detected:
+
+```text
+Frame is discarded.
+```
+
+---
+
+# MAC Address
+
+Data Link Layer uses:
+
+```text
+MAC Address
+```
+
+for communication inside a local network.
+
+Example:
+
+```text
+AA:BB:CC:DD:EE:FF
+```
+
+---
+
+# Devices Working at Data Link Layer
+
+The main device working at this layer is:
+
+```text
+Switch
+```
+
+because it forwards frames using MAC addresses.
+
+---
+
+# Main Functions of Data Link Layer
+
+## 1. Framing
+
+Converts packets into frames.
+
+---
+
+## 2. Physical Addressing
+
+Uses MAC addresses for communication.
+
+---
+
+## 3. Error Detection
+
+Detects transmission errors using CRC.
+
+---
+
+## 4. Flow Control
+
+Prevents a fast sender from overwhelming a slow receiver.
+
+---
+
+## 5. Access Control
+
+Determines which device can use the communication channel.
+
+---
+
+# Easy Way to Remember
+
+```text
+Network Layer   -> Network to Network Delivery
+Data Link Layer -> Node to Node Delivery
+Physical Layer  -> Bit Transmission
+```
+
+---
+
+# Quick Revision
+
+```text
+Layer          -> Layer 2
+Data Unit      -> Frame
+Address Used   -> MAC Address
+Device Used    -> Switch
+Delivery Type  -> Node to Node Delivery
+
+Functions:
+- Framing
+- Physical Addressing
+- Error Detection
+- Flow Control
+- Access Control
+```
 
