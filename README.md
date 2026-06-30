@@ -5421,3 +5421,185 @@ Tree  -> Combination of Star and Bus
 Most Commonly Used:
 Star Topology
 ```
+# Transmission Modes
+
+Transmission Mode defines:
+
+```text
+Direction of communication between two devices.
+```
+
+In simple words:
+
+```text
+Who can send data and when?
+```
+
+There are three transmission modes:
+
+1. Simplex
+2. Half Duplex
+3. Full Duplex
+
+---
+
+# Simplex Mode
+
+Communication happens in only one direction.
+
+```text
+Sender  --------->  Receiver
+```
+
+The receiver cannot send data back.
+
+---
+
+## Examples
+
+```text
+Keyboard ---------> Computer
+```
+
+The keyboard sends data to the computer but the computer does not send data back to the keyboard.
+
+Other examples:
+
+* Television Broadcast
+* Radio Broadcast
+* Monitor
+
+---
+
+## Characteristics
+
+* One-way communication
+* Simple implementation
+* No acknowledgment possible
+
+---
+
+# Half Duplex Mode
+
+Communication happens in both directions but not at the same time.
+
+```text
+A ---------> B
+
+or
+
+A <--------- B
+```
+
+Both devices cannot transmit simultaneously.
+
+---
+
+## Example
+
+```text
+Walkie Talkie
+```
+
+When one person speaks:
+
+```text
+Over
+```
+
+the other person listens.
+
+Only after the first person stops speaking can the second person reply.
+
+---
+
+## Characteristics
+
+* Two-way communication
+* Communication is not simultaneous
+* Better utilization than Simplex
+
+---
+
+# Full Duplex Mode
+
+Communication happens in both directions at the same time.
+
+```text
+A ---------> B
+A <--------- B
+```
+
+Both devices can send and receive simultaneously.
+
+---
+
+## Examples
+
+```text
+Mobile Phone Call
+```
+
+Both people can talk and listen at the same time.
+
+Other examples:
+
+* Modern Ethernet
+* Video Calls
+
+---
+
+## Characteristics
+
+* Two-way communication
+* Simultaneous communication
+* Highest efficiency
+
+---
+
+# Comparison Table
+
+| Feature                    | Simplex      | Half Duplex   | Full Duplex |
+| -------------------------- | ------------ | ------------- | ----------- |
+| Communication Direction    | One Way      | Two Way       | Two Way     |
+| Simultaneous Communication | No           | No            | Yes         |
+| Efficiency                 | Low          | Medium        | High        |
+| Example                    | Keyboard, TV | Walkie Talkie | Phone Call  |
+
+---
+
+# Easy Way to Remember
+
+```text
+Simplex     -> Only Send
+Half Duplex -> Send or Receive
+Full Duplex -> Send and Receive Together
+```
+
+---
+
+# Real Life Examples
+
+```text
+Simplex     -> Teacher giving lecture
+Half Duplex -> Walkie Talkie
+Full Duplex -> Phone Call
+```
+
+---
+
+# Quick Revision
+
+```text
+Simplex
+- One Direction Communication
+- Example: Keyboard, TV
+
+Half Duplex
+- Both Directions but One at a Time
+- Example: Walkie Talkie
+
+Full Duplex
+- Both Directions at the Same Time
+- Example: Phone Call
+```
