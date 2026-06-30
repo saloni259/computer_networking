@@ -1871,4 +1871,2835 @@ Flow Control -> Protect receiver
 Congestion Control -> Protect network
 ```
 
+# Network Layer - Forwarding vs Routing
+
+The main job of the Network Layer is to move packets from the source device to the destination device.
+
+Example:
+
+```text
+My Laptop
+   ↓
+Router
+   ↓
+Internet
+   ↓
+Google Server
+```
+
+To do this, the network layer performs two important functions:
+
+* Routing
+* Forwarding
+
+---
+
+# Routing
+
+Routing means deciding the complete path that a packet should follow from source to destination.
+
+Example:
+
+```text
+Laptop
+ ↓
+Router A
+ ↓
+Router B
+ ↓
+Router C
+ ↓
+Google Server
+```
+
+Routing decides whether the packet should go through:
+
+```text
+A → B → C
+```
+
+or
+
+```text
+A → D → E → C
+```
+
+It is basically route planning.
+
+---
+
+## Real Life Example
+
+Suppose you want to travel from Kolkata to Delhi.
+
+You have multiple routes:
+
+```text
+Kolkata → Patna → Delhi
+```
+
+or
+
+```text
+Kolkata → Lucknow → Delhi
+```
+
+Choosing the route is called **Routing**.
+
+---
+
+# Forwarding
+
+Forwarding means moving a packet from the incoming interface of a router to the correct outgoing interface.
+
+Example:
+
+```text
+Laptop
+ ↓
+Router A
+ ↓
+Router B
+ ↓
+Router C
+ ↓
+Google Server
+```
+
+When the packet reaches Router B, Router B only needs to decide:
+
+```text
+Which port should I send this packet to next?
+```
+
+For example:
+
+```text
+Incoming Port = 1
+Outgoing Port = 3
+```
+
+This process is called **Forwarding**.
+
+---
+
+## Real Life Example
+
+Suppose you are already in Patna and now need to decide which road to take to reach Delhi.
+
+Choosing the next road from the current location is called **Forwarding**.
+
+---
+
+# Easy Way to Remember
+
+```text
+Routing   -> Decides the complete path.
+Forwarding -> Sends packet to the next hop.
+```
+
+---
+
+# Another Example
+
+Imagine a courier service.
+
+Routing department decides:
+
+```text
+Kolkata
+ ↓
+Patna Hub
+ ↓
+Delhi Hub
+ ↓
+Customer
+```
+
+This is routing.
+
+At Patna Hub, deciding which truck should carry the parcel next is forwarding.
+
+---
+
+# Routing vs Forwarding
+
+| Routing                         | Forwarding               |
+| ------------------------------- | ------------------------ |
+| Decides complete path           | Moves packet to next hop |
+| Global decision                 | Local decision           |
+| Happens in all routers together | Happens inside a router  |
+| Uses routing table              | Uses forwarding table    |
+| Part of Control Plane           | Part of Data Plane       |
+
+---
+
+# Data Plane vs Control Plane
+
+## Data Plane
+
+Responsible for actually moving packets.
+
+Example:
+
+```text
+Packet arrives at Router B
+↓
+Router sends packet to Router C
+```
+
+This is forwarding.
+
+---
+
+## Control Plane
+
+Responsible for building routes and routing tables.
+
+Example:
+
+```text
+Best path to Google:
+Router A → Router B → Router C
+```
+
+This is routing.
+
+---
+
+# Routing Protocols
+
+Routers exchange information using routing protocols such as:
+
+* RIP
+* OSPF
+* BGP
+
+These protocols help routers decide the best path.
+
+---
+
+# Quick Revision
+
+```text
+Routing   -> Path Selection
+Forwarding -> Packet Movement
+
+Routing   -> Control Plane
+Forwarding -> Data Plane
+
+Routing   -> Global Decision
+Forwarding -> Local Decision
+```
+# IPv4 (Internet Protocol Version 4)
+
+An IP address is a unique logical address given to every device connected to a network.
+
+Example:
+
+```text
+192.168.1.10
+```
+
+You can think of it as the home address of a computer.
+
+Without an IP address, devices on the internet would not know where to send data.
+
+---
+
+# Why do we need IP addresses?
+
+Suppose your laptop wants to send data to Google.
+
+```text
+My Laptop
+    ↓
+Router
+    ↓
+Internet
+    ↓
+Google Server
+```
+
+The packet needs an address to know where it should go.
+
+That address is called the IP address.
+
+---
+
+# IPv4 Address Format
+
+IPv4 uses:
+
+```text
+32 bits
+```
+
+These 32 bits are divided into:
+
+```text
+4 parts (octets)
+```
+
+Example:
+
+```text
+192.168.1.10
+```
+
+Each part contains:
+
+```text
+8 bits
+```
+
+So:
+
+```text
+8 + 8 + 8 + 8 = 32 bits
+```
+
+---
+
+# Binary Representation
+
+Example:
+
+```text
+192.168.1.10
+```
+
+in binary becomes:
+
+```text
+11000000.10101000.00000001.00001010
+```
+
+---
+
+# Range of Each Octet
+
+Since each octet contains 8 bits:
+
+Minimum value:
+
+```text
+00000000 = 0
+```
+
+Maximum value:
+
+```text
+11111111 = 255
+```
+
+Therefore every part of an IPv4 address lies between:
+
+```text
+0 to 255
+```
+
+---
+
+# Network ID and Host ID
+
+An IPv4 address consists of two parts:
+
+* Network ID
+* Host ID
+
+Example:
+
+```text
+192.168.1.25
+```
+
+can be divided as:
+
+```text
+Network ID = 192.168.1
+Host ID    = 25
+```
+
+---
+
+## Real Life Example
+
+Think of an apartment building.
+
+```text
+Apartment Building Number -> Network ID
+Flat Number               -> Host ID
+```
+
+The building identifies the network and the flat identifies the device inside that network.
+
+---
+
+# Why do we separate Network ID and Host ID?
+
+When a packet arrives:
+
+1. Router first finds the destination network.
+2. Then it finds the destination device inside that network.
+
+---
+
+# IPv4 Classes
+
+## Class A
+
+Range:
+
+```text
+1.x.x.x to 126.x.x.x
+```
+
+Default subnet mask:
+
+```text
+255.0.0.0
+```
+
+Used for very large organizations.
+
+---
+
+## Class B
+
+Range:
+
+```text
+128.x.x.x to 191.x.x.x
+```
+
+Default subnet mask:
+
+```text
+255.255.0.0
+```
+
+Used for medium sized organizations.
+
+---
+
+## Class C
+
+Range:
+
+```text
+192.x.x.x to 223.x.x.x
+```
+
+Default subnet mask:
+
+```text
+255.255.255.0
+```
+
+Used for small organizations.
+
+---
+
+## Class D
+
+Range:
+
+```text
+224.x.x.x to 239.x.x.x
+```
+
+Used for:
+
+```text
+Multicasting
+```
+
+---
+
+## Class E
+
+Range:
+
+```text
+240.x.x.x to 255.x.x.x
+```
+
+Used for:
+
+```text
+Research and Experimental purposes
+```
+
+---
+
+# Easy Memory Trick
+
+```text
+A -> Large organizations
+B -> Medium organizations
+C -> Small organizations
+D -> Multicast
+E -> Experimental
+```
+
+---
+
+# Public IP vs Private IP
+
+## Public IP
+
+* Visible on the internet.
+* Assigned by ISP.
+* Globally unique.
+
+Example:
+
+```text
+49.204.x.x
+```
+
+---
+
+## Private IP
+
+Used inside homes and offices.
+
+Private IP ranges:
+
+```text
+10.0.0.0      - 10.255.255.255
+172.16.0.0    - 172.31.255.255
+192.168.0.0   - 192.168.255.255
+```
+
+These addresses cannot be accessed directly from the internet.
+
+---
+
+## Example
+
+Your laptop may have:
+
+```text
+192.168.1.5
+```
+
+inside your home network.
+
+But your router may have:
+
+```text
+49.204.x.x
+```
+
+as the public IP assigned by the ISP.
+
+---
+
+# Why was IPv6 introduced?
+
+IPv4 provides:
+
+```text
+2^32 ≈ 4.3 Billion addresses
+```
+
+This seemed enough in the 1980s.
+
+Today we have:
+
+* Phones
+* Laptops
+* Smart TVs
+* Smart Watches
+* IoT Devices
+* Cameras
+
+As a result, IPv4 addresses started running out.
+
+To solve this problem:
+
+```text
+IPv6
+```
+
+was introduced.
+
+---
+
+# Quick Revision
+
+```text
+IPv4 -> 32 bits
+4 Octets
+Each octet ranges from 0 to 255
+
+IP Address = Network ID + Host ID
+
+Public IP -> Internet Accessible
+Private IP -> Used inside LAN
+
+IPv6 was introduced because IPv4 addresses are limited.
+```
+# IPv6 (Internet Protocol Version 6)
+
+IPv6 was introduced because IPv4 addresses started running out.
+
+IPv4 provides:
+
+```text
+2^32 ≈ 4.3 Billion addresses
+```
+
+Earlier this looked huge, but today we have:
+
+* Phones
+* Laptops
+* Tablets
+* Smart TVs
+* Smart Watches
+* IoT Devices
+* Cameras
+
+So a larger address space was needed.
+
+---
+
+# What is IPv6?
+
+IPv6 is the next generation of Internet Protocol.
+
+It uses:
+
+```text
+128 bits
+```
+
+instead of:
+
+```text
+32 bits
+```
+
+used in IPv4.
+
+---
+
+# Number of Addresses
+
+IPv4:
+
+```text
+2^32 ≈ 4.3 Billion
+```
+
+IPv6:
+
+```text
+2^128
+```
+
+which is approximately:
+
+```text
+340 undecillion addresses
+```
+
+This number is so large that running out of addresses is practically impossible.
+
+---
+
+# IPv6 Address Format
+
+IPv4 Example:
+
+```text
+192.168.1.10
+```
+
+IPv6 Example:
+
+```text
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+```
+
+Notice:
+
+* IPv4 uses dots (`.`)
+* IPv6 uses colons (`:`)
+
+---
+
+# Structure of IPv6 Address
+
+IPv6 contains:
+
+```text
+8 groups
+```
+
+Each group contains:
+
+```text
+4 hexadecimal digits
+```
+
+Example:
+
+```text
+2001
+0db8
+85a3
+0000
+0000
+8a2e
+0370
+7334
+```
+
+---
+
+# Why Hexadecimal?
+
+If decimal numbers were used, IPv6 addresses would become extremely long.
+
+Hexadecimal notation makes them shorter and easier to read.
+
+---
+
+# IPv6 Address Compression
+
+Leading zeros can be removed.
+
+Example:
+
+```text
+2001:0db8:0000:0000:0000:0000:0000:0001
+```
+
+can be written as:
+
+```text
+2001:db8::1
+```
+
+The `::` represents multiple groups of zeros.
+
+---
+
+# Advantages of IPv6
+
+## Huge Address Space
+
+The biggest advantage of IPv6 is the massive number of available addresses.
+
+---
+
+## Better Security
+
+IPv6 was designed with support for:
+
+```text
+IPSec
+```
+
+which provides security and encryption features.
+
+---
+
+## No Need for NAT in Most Cases
+
+With IPv4:
+
+```text
+Many Private IPs
+↓
+One Public IP
+```
+
+using NAT.
+
+With IPv6, every device can potentially have its own public IP address.
+
+---
+
+## Simpler Routing
+
+IPv6 routing tables are more efficient and scalable.
+
+---
+
+# IPv4 vs IPv6
+
+| IPv4                        | IPv6                            |
+| --------------------------- | ------------------------------- |
+| 32-bit                      | 128-bit                         |
+| Uses dots (.)               | Uses colons (:)                 |
+| About 4.3 Billion addresses | 2^128 addresses                 |
+| Address exhaustion problem  | Practically unlimited addresses |
+| Example: 192.168.1.1        | Example: 2001:db8::1            |
+
+---
+
+# Easy Memory Trick
+
+```text
+IPv4 -> 32 bits -> Dots (.)
+IPv6 -> 128 bits -> Colons (:)
+```
+
+---
+
+# Quick Revision
+
+```text
+IPv4 -> 32-bit
+IPv6 -> 128-bit
+
+IPv4 uses decimal numbers.
+IPv6 uses hexadecimal numbers.
+
+IPv6 was introduced because IPv4 addresses are limited.
+
+IPv6 addresses use colons instead of dots.
+```
+# ICMP (Internet Control Message Protocol)
+
+ICMP is used for sending error messages and control information in a network.
+
+IP itself cannot report errors, so it uses ICMP for this purpose.
+
+---
+
+# Why do we need ICMP?
+
+Suppose your computer sends a packet to a server but:
+
+* The server does not exist.
+* The destination network is unreachable.
+* The packet gets stuck in a loop.
+
+Your computer needs to know what went wrong.
+
+ICMP provides this information.
+
+---
+
+# Example
+
+Suppose your laptop sends a packet to:
+
+```text
+google.com
+```
+
+but the destination cannot be reached.
+
+Instead of silently dropping the packet, the network sends back an error message using ICMP.
+
+---
+
+# Common ICMP Messages
+
+## Destination Unreachable
+
+This message is sent when:
+
+* The destination host is down.
+* The destination network does not exist.
+* The destination port is closed.
+
+Example:
+
+```text
+Destination Host Unreachable
+```
+
+---
+
+## Time Exceeded
+
+Packets use a field called:
+
+```text
+TTL (Time To Live)
+```
+
+Every router decreases the TTL value by 1.
+
+Example:
+
+```text
+Initial TTL = 5
+
+Router 1 -> TTL = 4
+Router 2 -> TTL = 3
+Router 3 -> TTL = 2
+Router 4 -> TTL = 1
+Router 5 -> TTL = 0
+```
+
+When TTL becomes 0:
+
+* The router drops the packet.
+* An ICMP Time Exceeded message is sent back.
+
+This prevents packets from travelling forever in routing loops.
+
+---
+
+## Parameter Problem
+
+If the IP header contains invalid or corrupted information, the router sends:
+
+```text
+ICMP Parameter Problem
+```
+
+---
+
+## Source Quench
+
+This message was historically used to tell the sender:
+
+```text
+Slow down, the network is congested.
+```
+
+This message is now obsolete and is no longer used in modern networks.
+
+---
+
+# Ping and ICMP
+
+The `ping` command uses ICMP.
+
+When you run:
+
+```bash
+ping google.com
+```
+
+your computer sends:
+
+```text
+ICMP Echo Request
+```
+
+Google replies with:
+
+```text
+ICMP Echo Reply
+```
+
+If the reply arrives successfully, the host is reachable.
+
+---
+
+## Example
+
+```text
+Laptop
+   |
+Echo Request
+   ↓
+Google Server
+   |
+Echo Reply
+   ↑
+Laptop
+```
+
+---
+
+# Traceroute and ICMP
+
+Traceroute is used to find all routers between source and destination.
+
+Example:
+
+```text
+Laptop
+ ↓
+Router 1
+ ↓
+Router 2
+ ↓
+Router 3
+ ↓
+Google Server
+```
+
+Traceroute works using:
+
+* TTL values
+* ICMP Time Exceeded messages
+
+---
+
+# Important Points
+
+```text
+ICMP is used for error reporting.
+ICMP works with IP at the Network Layer.
+ICMP does not carry application data.
+Ping uses ICMP.
+Traceroute uses ICMP.
+```
+
+---
+
+# Quick Revision
+
+```text
+ICMP -> Error Reporting Protocol
+
+Ping -> Echo Request + Echo Reply
+
+TTL reaches 0 -> Time Exceeded
+
+Destination not reachable -> Destination Unreachable
+
+Traceroute uses ICMP Time Exceeded messages
+```
+# OSPF (Open Shortest Path First)
+
+OSPF is a routing protocol used by routers to find the best path between source and destination.
+
+It is a **Link State Routing Protocol**.
+
+---
+
+# Why do we need OSPF?
+
+Suppose Router A wants to send data to Router D.
+
+There are two possible paths:
+
+```text
+Path 1:
+A -> B -> D
+Cost = 20
+
+Path 2:
+A -> C -> D
+Cost = 10
+```
+
+OSPF chooses:
+
+```text
+A -> C -> D
+```
+
+because it has lower cost.
+
+---
+
+# Link State Routing
+
+In OSPF, every router shares information about:
+
+* Its neighbors
+* Link costs
+* Network status
+
+As a result, every router knows the complete network topology.
+
+---
+
+# Example
+
+```text
+      B
+    /   \
+   5     2
+  /       \
+ A         D
+  \       /
+   1     4
+    \   /
+      C
+```
+
+Possible paths from A to D:
+
+```text
+A -> B -> D = 5 + 2 = 7
+
+A -> C -> D = 1 + 4 = 5
+```
+
+OSPF chooses:
+
+```text
+A -> C -> D
+```
+
+because:
+
+```text
+5 < 7
+```
+
+---
+
+# Algorithm Used
+
+OSPF uses:
+
+```text
+Dijkstra's Shortest Path Algorithm
+```
+
+also called:
+
+```text
+Shortest Path First (SPF) Algorithm
+```
+
+---
+
+# Cost in OSPF
+
+OSPF selects routes based on:
+
+```text
+Cost
+```
+
+and not on:
+
+```text
+Hop Count
+```
+
+---
+
+## Example
+
+Route 1:
+
+```text
+A -> B -> D
+Hop Count = 2
+Cost = 100
+```
+
+Route 2:
+
+```text
+A -> C -> E -> D
+Hop Count = 3
+Cost = 20
+```
+
+OSPF chooses:
+
+```text
+A -> C -> E -> D
+```
+
+because the cost is lower.
+
+---
+
+# DR and BDR
+
+OSPF uses:
+
+```text
+DR  -> Designated Router
+BDR -> Backup Designated Router
+```
+
+---
+
+# Why are DR and BDR needed?
+
+Suppose there are:
+
+```text
+10 routers
+```
+
+If every router communicates with every other router:
+
+```text
+10 × 9 = 90 communications
+```
+
+This creates a lot of overhead.
+
+Instead:
+
+* All routers communicate with the DR.
+* DR distributes the information.
+* If DR fails, BDR takes over.
+
+---
+
+# DR Election
+
+Rules for DR selection:
+
+1. Highest Router Priority wins.
+2. If priorities are equal:
+
+   * Highest Loopback IP wins.
+   * If loopback is not present, highest active interface IP wins.
+
+---
+
+# OSPF Characteristics
+
+```text
+Type      : Link State Routing Protocol
+Algorithm : Dijkstra Algorithm
+Metric    : Cost
+Convergence : Fast
+Used For  : Large Networks
+```
+
+---
+
+# OSPF vs RIP
+
+| OSPF                        | RIP                         |
+| --------------------------- | --------------------------- |
+| Link State Protocol         | Distance Vector Protocol    |
+| Uses Cost                   | Uses Hop Count              |
+| Uses Dijkstra Algorithm     | Uses Bellman Ford Algorithm |
+| Fast Convergence            | Slow Convergence            |
+| Suitable for Large Networks | Suitable for Small Networks |
+
+---
+
+# Quick Revision
+
+```text
+OSPF -> Open Shortest Path First
+
+Type -> Link State Routing Protocol
+
+Algorithm -> Dijkstra Algorithm
+
+Metric -> Cost
+
+Uses DR and BDR
+
+Suitable for Large Networks
+```
+# RIP (Routing Information Protocol)
+
+RIP is a routing protocol used by routers to find the path from source to destination.
+
+It is a **Distance Vector Routing Protocol**.
+
+---
+
+# How does RIP choose a path?
+
+RIP chooses the path with the smallest:
+
+```text
+Hop Count
+```
+
+A hop means passing through one router.
+
+---
+
+# Example
+
+Suppose Router A wants to send data to Router D.
+
+There are two possible paths:
+
+```text
+Path 1:
+A -> B -> D
+Hop Count = 2
+```
+
+```text
+Path 2:
+A -> C -> E -> D
+Hop Count = 3
+```
+
+RIP chooses:
+
+```text
+A -> B -> D
+```
+
+because:
+
+```text
+2 < 3
+```
+
+---
+
+# What is Hop Count?
+
+A hop is simply one router crossed by the packet.
+
+Example:
+
+```text
+Laptop
+ ↓
+Router A
+ ↓
+Router B
+ ↓
+Google Server
+```
+
+Hop Count:
+
+```text
+2
+```
+
+because the packet passed through two routers.
+
+---
+
+# Algorithm Used
+
+RIP uses:
+
+```text
+Bellman-Ford Algorithm
+```
+
+to calculate routes.
+
+---
+
+# Maximum Hop Count
+
+RIP supports a maximum hop count of:
+
+```text
+15
+```
+
+If hop count becomes:
+
+```text
+16
+```
+
+the destination is considered unreachable.
+
+---
+
+# Example
+
+```text
+Hop Count = 10
+```
+
+Destination is reachable.
+
+```text
+Hop Count = 16
+```
+
+Destination is unreachable.
+
+---
+
+# How RIP Works
+
+Routers periodically share their routing tables with neighboring routers.
+
+Example:
+
+```text
+Router A:
+I can reach Google in 3 hops.
+
+Router B:
+I can reach Google in 2 hops.
+```
+
+Router A updates its table accordingly.
+
+---
+
+# Problem with RIP
+
+Suppose there are two routes:
+
+Route 1:
+
+```text
+Hop Count = 2
+Very Slow Network
+```
+
+Route 2:
+
+```text
+Hop Count = 4
+Very Fast Network
+```
+
+RIP still chooses:
+
+```text
+Hop Count = 2
+```
+
+because RIP only considers hop count and ignores bandwidth or delay.
+
+---
+
+# RIP Characteristics
+
+```text
+Type        : Distance Vector Routing Protocol
+Algorithm   : Bellman-Ford Algorithm
+Metric      : Hop Count
+Max Hops    : 15
+Convergence : Slow
+Used For    : Small Networks
+```
+
+---
+
+# RIP vs OSPF
+
+| RIP                         | OSPF                        |
+| --------------------------- | --------------------------- |
+| Distance Vector Protocol    | Link State Protocol         |
+| Uses Hop Count              | Uses Cost                   |
+| Uses Bellman-Ford Algorithm | Uses Dijkstra Algorithm     |
+| Slow Convergence            | Fast Convergence            |
+| Suitable for Small Networks | Suitable for Large Networks |
+
+---
+
+# Easy Way to Remember
+
+```text
+RIP  -> Router count matters
+OSPF -> Cost matters
+```
+
+---
+
+# Quick Revision
+
+```text
+RIP -> Routing Information Protocol
+
+Type -> Distance Vector Routing Protocol
+
+Algorithm -> Bellman-Ford Algorithm
+
+Metric -> Hop Count
+
+Maximum Hop Count -> 15
+
+Suitable for Small Networks
+```
+# ARP (Address Resolution Protocol)
+
+ARP is used to find the MAC address of a device when we already know its IP address.
+
+In simple words:
+
+```text
+IP Address  --->  MAC Address
+```
+
+---
+
+# Why do we need ARP?
+
+Suppose your laptop wants to send data to another device in the same network.
+
+Your laptop knows:
+
+```text
+Destination IP Address = 192.168.1.20
+```
+
+But actual communication inside a LAN happens using:
+
+```text
+MAC Address
+```
+
+So the question becomes:
+
+```text
+How do we find the MAC address from the IP address?
+```
+
+The answer is:
+
+```text
+ARP
+```
+
+---
+
+# Example
+
+Suppose we have two devices:
+
+```text
+Laptop A
+IP  = 192.168.1.10
+MAC = AA-AA-AA
+```
+
+```text
+Laptop B
+IP  = 192.168.1.20
+MAC = BB-BB-BB
+```
+
+Laptop A wants to send data to Laptop B.
+
+Laptop A knows:
+
+```text
+192.168.1.20
+```
+
+but it does not know:
+
+```text
+BB-BB-BB
+```
+
+So ARP is used.
+
+---
+
+# Step 1: ARP Request
+
+Laptop A sends a message to everyone in the network:
+
+```text
+Who has IP 192.168.1.20 ?
+Tell 192.168.1.10
+```
+
+This is called:
+
+```text
+ARP Request
+```
+
+ARP Request is a:
+
+```text
+Broadcast Message
+```
+
+because it is sent to all devices in the LAN.
+
+---
+
+# Step 2: ARP Reply
+
+Laptop B checks the request and finds:
+
+```text
+192.168.1.20 is my IP address.
+```
+
+So it replies:
+
+```text
+192.168.1.20 is at BB-BB-BB
+```
+
+This is called:
+
+```text
+ARP Reply
+```
+
+ARP Reply is a:
+
+```text
+Unicast Message
+```
+
+because it is sent only to Laptop A.
+
+---
+
+# Step 3: Store in ARP Cache
+
+Laptop A stores:
+
+```text
+192.168.1.20 -> BB-BB-BB
+```
+
+inside its:
+
+```text
+ARP Cache
+```
+
+so it doesn't need to ask again next time.
+
+---
+
+# Diagram
+
+```text
+Laptop A                          Laptop B
+192.168.1.10                      192.168.1.20
+
+ARP Request:
+Who has 192.168.1.20 ?
+-------------------------------------->
+
+ARP Reply:
+192.168.1.20 is BB-BB-BB
+<--------------------------------------
+
+Communication Starts
+```
+
+---
+
+# ARP Cache
+
+ARP Cache stores:
+
+```text
+IP Address -> MAC Address
+```
+
+Example:
+
+| IP Address   | MAC Address |
+| ------------ | ----------- |
+| 192.168.1.1  | AA-AA-AA    |
+| 192.168.1.20 | BB-BB-BB    |
+| 192.168.1.30 | CC-CC-CC    |
+
+---
+
+# Why use ARP Cache?
+
+Without cache:
+
+```text
+Every packet
+↓
+ARP Request
+↓
+ARP Reply
+```
+
+This would waste network bandwidth.
+
+---
+
+# Broadcast vs Unicast
+
+```text
+ARP Request -> Broadcast
+ARP Reply   -> Unicast
+```
+
+This is a very common interview question.
+
+---
+
+# IP Address vs MAC Address
+
+| IP Address       | MAC Address             |
+| ---------------- | ----------------------- |
+| Logical Address  | Physical Address        |
+| Can change       | Usually fixed           |
+| Used for Routing | Used for Local Delivery |
+| Network Layer    | Data Link Layer         |
+
+---
+
+# Important Point
+
+If your computer wants to send data to Google:
+
+```text
+www.google.com
+```
+
+your computer does NOT find Google's MAC address.
+
+Instead, it finds the MAC address of:
+
+```text
+Default Gateway (Router)
+```
+
+because Google is outside your local network.
+
+This is a very common interview question.
+
+---
+
+# Easy Way to Remember
+
+```text
+DNS -> Domain Name to IP Address
+
+ARP -> IP Address to MAC Address
+
+NAT -> Private IP to Public IP
+```
+
+---
+
+# Quick Revision
+
+```text
+ARP -> Address Resolution Protocol
+
+ARP converts:
+IP Address -> MAC Address
+
+ARP Request -> Broadcast
+
+ARP Reply -> Unicast
+
+ARP Cache stores:
+IP Address -> MAC Address mapping
+```
+# NAT (Network Address Translation)
+
+NAT is used to convert private IP addresses into public IP addresses and vice versa.
+
+In simple words:
+
+```text
+Private IP  --->  Public IP
+```
+
+---
+
+# Why do we need NAT?
+
+Suppose your home has:
+
+* Laptop
+* Phone
+* Smart TV
+* Tablet
+
+Their IP addresses are:
+
+```text
+Laptop   -> 192.168.1.2
+Phone    -> 192.168.1.3
+TV       -> 192.168.1.4
+Tablet   -> 192.168.1.5
+```
+
+But your ISP provides only one public IP:
+
+```text
+49.204.100.50
+```
+
+The question is:
+
+```text
+How can all devices use the internet using only one public IP?
+```
+
+The answer is:
+
+```text
+NAT
+```
+
+---
+
+# Example
+
+Suppose your laptop wants to open Google.
+
+Before NAT:
+
+```text
+Source IP      = 192.168.1.2
+Destination IP = Google's IP
+```
+
+Problem:
+
+```text
+192.168.1.2
+```
+
+is a private IP and private IPs cannot travel on the internet.
+
+---
+
+# NAT Translation
+
+The router changes:
+
+```text
+192.168.1.2
+```
+
+to
+
+```text
+49.204.100.50
+```
+
+Now the packet becomes:
+
+```text
+Source IP      = 49.204.100.50
+Destination IP = Google's IP
+```
+
+Google receives the packet successfully.
+
+---
+
+# Reply from Google
+
+Google sends the response back to:
+
+```text
+49.204.100.50
+```
+
+The router checks its NAT table and finds:
+
+```text
+49.204.100.50:6001
+↓
+192.168.1.2:5001
+```
+
+The router then forwards the packet to the laptop.
+
+---
+
+# NAT Table Example
+
+| Private IP  | Private Port | Public IP     | Public Port |
+| ----------- | ------------ | ------------- | ----------- |
+| 192.168.1.2 | 5001         | 49.204.100.50 | 6001        |
+| 192.168.1.3 | 5002         | 49.204.100.50 | 6002        |
+| 192.168.1.4 | 5003         | 49.204.100.50 | 6003        |
+
+This allows multiple devices to share a single public IP address.
+
+---
+
+# Why are Port Numbers Needed?
+
+Suppose both laptop and phone open Google at the same time.
+
+Both use:
+
+```text
+49.204.100.50
+```
+
+as their public IP.
+
+The router uses port numbers to identify which packet belongs to which device.
+
+Example:
+
+```text
+Laptop -> Public Port 6001
+Phone  -> Public Port 6002
+```
+
+---
+
+# Types of NAT
+
+## Static NAT
+
+```text
+One Private IP
+↓
+One Public IP
+```
+
+Fixed mapping between private and public IP.
+
+---
+
+## Dynamic NAT
+
+```text
+Many Private IPs
+↓
+Pool of Public IPs
+```
+
+Public IP is assigned dynamically from a pool.
+
+---
+
+## PAT (Port Address Translation)
+
+```text
+Many Private IPs
+↓
+One Public IP
+```
+
+using different port numbers.
+
+This is the type of NAT commonly used in home routers.
+
+---
+
+# Why is NAT Important?
+
+### Saves IPv4 addresses
+
+Without NAT:
+
+```text
+Every device
+↓
+Needs its own public IP
+```
+
+IPv4 addresses would have run out much earlier.
+
+---
+
+### Improves Security
+
+Devices using private IP addresses are not directly accessible from the internet.
+
+---
+
+### Reduces Cost
+
+The ISP only needs to provide one public IP instead of many.
+
+---
+
+# Private IP Address Ranges
+
+```text
+10.0.0.0      - 10.255.255.255
+172.16.0.0    - 172.31.255.255
+192.168.0.0   - 192.168.255.255
+```
+
+These addresses are reserved for private networks.
+
+---
+
+# Example from Real Life
+
+Think of an apartment building.
+
+Inside the building:
+
+```text
+Flat 101
+Flat 102
+Flat 103
+Flat 104
+```
+
+Outside the world only sees:
+
+```text
+ABC Apartment,
+Kolkata
+```
+
+Similarly:
+
+```text
+Many Private IPs
+↓
+One Public IP
+```
+
+---
+
+# Easy Way to Remember
+
+```text
+DNS -> Domain Name to IP Address
+
+ARP -> IP Address to MAC Address
+
+NAT -> Private IP to Public IP
+```
+
+---
+
+# Quick Revision
+
+```text
+NAT -> Network Address Translation
+
+Private IP -> Public IP
+
+Performed by -> Router
+
+Home routers mostly use:
+PAT (Port Address Translation)
+
+Purpose:
+- Save IPv4 addresses
+- Improve security
+- Allow multiple devices to share one public IP
+```
+# Hub vs Switch vs Router
+
+These three devices are used to connect devices in a network, but they work in different ways.
+
+---
+
+# Hub
+
+A Hub is a simple networking device that sends incoming data to every connected device.
+
+Example:
+
+```text
+Laptop A
+   |
+  Hub
+ / | \
+B  C  D
+```
+
+If A sends data to C, the hub forwards the data to:
+
+```text
+B
+C
+D
+```
+
+Every device receives the packet even though only C needs it.
+
+---
+
+## Problems with Hub
+
+* Wastes bandwidth.
+* Less secure because everyone receives the packet.
+* More collisions occur.
+
+---
+
+## OSI Layer
+
+```text
+Physical Layer (Layer 1)
+```
+
+Hub only works with electrical signals.
+
+It does not understand:
+
+* MAC Address
+* IP Address
+* Port Number
+
+---
+
+# Switch
+
+A Switch is an intelligent device that sends data only to the destination device.
+
+Example:
+
+```text
+Laptop A
+   |
+ Switch
+ / | \
+B  C  D
+```
+
+If A sends data to C, the switch sends data only to:
+
+```text
+C
+```
+
+---
+
+## How does Switch know where to send the data?
+
+A switch maintains a:
+
+```text
+MAC Address Table
+```
+
+Example:
+
+| MAC Address | Port |
+| ----------- | ---- |
+| AA-AA       | 1    |
+| BB-BB       | 2    |
+| CC-CC       | 3    |
+
+If destination MAC address is:
+
+```text
+CC-CC
+```
+
+the switch forwards the packet to:
+
+```text
+Port 3
+```
+
+---
+
+## Advantages of Switch
+
+* Better speed.
+* Better security.
+* Fewer collisions.
+
+---
+
+## OSI Layer
+
+```text
+Data Link Layer (Layer 2)
+```
+
+Switch works using:
+
+```text
+MAC Address
+```
+
+---
+
+# Router
+
+A Router is used to connect different networks.
+
+Example:
+
+```text
+Home Network
+     |
+   Router
+     |
+Internet
+     |
+Google Server
+```
+
+The router decides the best path for packets to reach another network.
+
+---
+
+## How does Router work?
+
+Router uses:
+
+```text
+IP Address
+```
+
+to forward packets.
+
+Example:
+
+```text
+Destination IP:
+142.250.xxx.xxx
+```
+
+Router checks its routing table and forwards the packet.
+
+---
+
+## OSI Layer
+
+```text
+Network Layer (Layer 3)
+```
+
+Router works using:
+
+```text
+IP Address
+```
+
+---
+
+# Collision Domain
+
+A collision occurs when two devices send data at the same time.
+
+## Hub
+
+```text
+Entire Hub = One Collision Domain
+```
+
+## Switch
+
+```text
+Each Port = Separate Collision Domain
+```
+
+## Router
+
+```text
+Each Interface = Separate Collision Domain
+```
+
+---
+
+# Broadcast Domain
+
+Broadcast means sending a message to everyone.
+
+## Hub
+
+```text
+One Broadcast Domain
+```
+
+## Switch
+
+```text
+One Broadcast Domain
+```
+
+## Router
+
+```text
+Each Interface = Separate Broadcast Domain
+```
+
+Routers break broadcast domains.
+
+---
+
+# Comparison Table
+
+| Feature            | Hub      | Switch          | Router            |
+| ------------------ | -------- | --------------- | ----------------- |
+| OSI Layer          | Layer 1  | Layer 2         | Layer 3           |
+| Uses               | Signals  | MAC Address     | IP Address        |
+| Sends Data To      | Everyone | Specific Device | Specific Network  |
+| Collision Domain   | One      | One per Port    | One per Interface |
+| Broadcast Domain   | One      | One             | Multiple          |
+| Intelligent Device | No       | Yes             | Yes               |
+
+---
+
+# Easy Way to Remember
+
+```text
+Hub    -> Send to Everyone
+Switch -> Send to Device
+Router -> Send to Network
+```
+
+---
+
+# Quick Revision
+
+```text
+Hub
+- Layer 1
+- Uses Signals
+- Sends data to everyone
+
+Switch
+- Layer 2
+- Uses MAC Address
+- Sends data to specific device
+
+Router
+- Layer 3
+- Uses IP Address
+- Connects different networks
+```
+
+# MAC Address vs IP Address
+
+Both MAC Address and IP Address are used for communication in a network, but they serve different purposes.
+
+---
+
+# IP Address
+
+IP Address is a logical address used to identify a device across different networks.
+
+Example:
+
+```text
+192.168.1.10
+```
+
+or
+
+```text
+2405:201:abcd::1
+```
+
+Routers use IP addresses to send packets from one network to another.
+
+---
+
+# MAC Address
+
+MAC Address is a physical address assigned to the Network Interface Card (NIC) of a device.
+
+Example:
+
+```text
+AA:BB:CC:DD:EE:FF
+```
+
+Switches use MAC addresses to deliver frames inside a local network.
+
+---
+
+# Example
+
+Suppose:
+
+```text
+Laptop IP  = 192.168.1.10
+Laptop MAC = AA-AA-AA
+
+Phone IP   = 192.168.1.20
+Phone MAC  = BB-BB-BB
+```
+
+When the laptop sends data to the phone:
+
+Router uses:
+
+```text
+192.168.1.20
+```
+
+to identify the destination network.
+
+Switch uses:
+
+```text
+BB-BB-BB
+```
+
+to identify the destination device.
+
+---
+
+# Why do we need both?
+
+Think of sending a letter.
+
+```text
+City + House Address -> IP Address
+Person Name Plate    -> MAC Address
+```
+
+The post office uses the address to reach the city.
+
+After reaching the house, the postman uses the name plate to identify the correct person.
+
+Similarly:
+
+```text
+IP Address  -> Which Network?
+MAC Address -> Which Device?
+```
+
+---
+
+# Can IP Address Change?
+
+Yes.
+
+Example:
+
+```text
+Today:
+192.168.1.10
+
+Tomorrow:
+192.168.1.15
+```
+
+The IP address may change when reconnecting to WiFi or changing networks.
+
+---
+
+# Can MAC Address Change?
+
+Normally:
+
+```text
+No
+```
+
+because it is assigned by the manufacturer to the network card.
+
+Example:
+
+```text
+AA:BB:CC:DD:EE:FF
+```
+
+usually remains the same.
+
+---
+
+# Who Uses Them?
+
+## Switch
+
+Uses:
+
+```text
+MAC Address
+```
+
+---
+
+## Router
+
+Uses:
+
+```text
+IP Address
+```
+
+---
+
+# OSI Layer
+
+## MAC Address
+
+```text
+Data Link Layer (Layer 2)
+```
+
+---
+
+## IP Address
+
+```text
+Network Layer (Layer 3)
+```
+
+---
+
+# Complete Communication Example
+
+Suppose your laptop opens Google.
+
+Step 1:
+
+```text
+google.com
+↓
+142.250.xxx.xxx
+```
+
+DNS converts domain name into IP address.
+
+---
+
+Step 2:
+
+Router uses:
+
+```text
+142.250.xxx.xxx
+```
+
+to forward packets towards Google.
+
+---
+
+Step 3:
+
+Inside your local network, the router uses:
+
+```text
+Laptop MAC Address
+```
+
+to deliver packets to your laptop.
+
+---
+
+# Comparison Table
+
+| Feature | MAC Address       | IP Address       |
+| ------- | ----------------- | ---------------- |
+| Type    | Physical Address  | Logical Address  |
+| Layer   | Layer 2           | Layer 3          |
+| Used By | Switch            | Router           |
+| Purpose | Identify Device   | Identify Network |
+| Changes | Usually No        | Yes              |
+| Example | AA:BB:CC:DD:EE:FF | 192.168.1.10     |
+
+---
+
+# Easy Way to Remember
+
+```text
+MAC -> Device Identity
+IP  -> Network Identity
+```
+
+---
+
+# Quick Revision
+
+```text
+MAC Address
+- Physical Address
+- Used by Switch
+- Layer 2
+- Identifies Device
+
+IP Address
+- Logical Address
+- Used by Router
+- Layer 3
+- Identifies Network
+```
+# What Happens When We Type google.com in a Browser?
+
+This process involves many concepts such as:
+
+* DNS
+* ARP
+* TCP
+* HTTP/HTTPS
+* NAT
+* Routing
+
+---
+
+# Step 1: Browser Checks Cache
+
+The browser first checks whether it already knows the IP address of Google.
+
+Example:
+
+```text
+google.com -> 142.250.xxx.xxx
+```
+
+If found, DNS lookup is skipped.
+
+---
+
+# Step 2: DNS Lookup
+
+If the IP address is not available in cache, DNS is used.
+
+```text
+google.com
+↓
+142.250.xxx.xxx
+```
+
+DNS converts domain names into IP addresses.
+
+---
+
+# Step 3: Check Whether Google is in the Same Network
+
+Suppose:
+
+```text
+Laptop IP = 192.168.1.10
+Google IP = 142.250.xxx.xxx
+```
+
+Google is outside the local network.
+
+Therefore, packets must be sent to the:
+
+```text
+Default Gateway (Router)
+```
+
+---
+
+# Step 4: ARP Request
+
+The laptop knows the router's IP address:
+
+```text
+192.168.1.1
+```
+
+but it does not know the router's MAC address.
+
+So the laptop sends:
+
+```text
+Who has 192.168.1.1 ?
+Tell 192.168.1.10
+```
+
+Router replies:
+
+```text
+192.168.1.1 is at AA-AA-AA
+```
+
+Now the laptop knows the router's MAC address.
+
+---
+
+# Step 5: TCP 3-Way Handshake
+
+Before sending data, TCP establishes a connection.
+
+```text
+Client -> SYN
+Server -> SYN + ACK
+Client -> ACK
+```
+
+Connection established.
+
+---
+
+# Step 6: HTTPS Request
+
+The browser sends an HTTPS request to Google.
+
+Example:
+
+```text
+GET /
+Host: google.com
+```
+
+Usually this request is sent to:
+
+```text
+Port 443
+```
+
+---
+
+# Step 7: NAT at Router
+
+Inside the home network:
+
+```text
+Laptop IP = 192.168.1.10
+```
+
+This is a private IP address.
+
+The router converts it into:
+
+```text
+49.xx.xx.xx
+```
+
+which is the public IP assigned by the ISP.
+
+This process is called:
+
+```text
+NAT
+```
+
+---
+
+# Step 8: Routing Across the Internet
+
+The packet travels through multiple routers.
+
+```text
+Laptop
+ ↓
+Home Router
+ ↓
+ISP Router
+ ↓
+Internet Routers
+ ↓
+Google Server
+```
+
+Each router checks the destination IP address and forwards the packet to the next router.
+
+---
+
+# Step 9: Google Server Processes the Request
+
+Google receives the request:
+
+```text
+GET /
+Host: google.com
+```
+
+and prepares the response.
+
+Example:
+
+```text
+HTML
+CSS
+JavaScript
+Images
+```
+
+---
+
+# Step 10: Response Travels Back
+
+The response follows the reverse path:
+
+```text
+Google Server
+ ↓
+Internet Routers
+ ↓
+ISP Router
+ ↓
+Home Router
+ ↓
+Laptop
+```
+
+---
+
+# Step 11: Reverse NAT
+
+The router receives packets for:
+
+```text
+49.xx.xx.xx
+```
+
+Router checks the NAT table:
+
+```text
+49.xx.xx.xx:6001
+↓
+192.168.1.10:5001
+```
+
+and forwards the packets to the laptop.
+
+---
+
+# Step 12: Browser Renders the Page
+
+The browser receives:
+
+* HTML
+* CSS
+* JavaScript
+* Images
+
+and displays the Google homepage on the screen.
+
+---
+
+# Complete Flow
+
+```text
+Browser Cache
+     ↓
+DNS Lookup
+     ↓
+ARP
+     ↓
+TCP 3-Way Handshake
+     ↓
+HTTPS Request
+     ↓
+NAT
+     ↓
+Routing
+     ↓
+Google Server
+     ↓
+Response
+     ↓
+Reverse NAT
+     ↓
+Browser Rendering
+```
+
+---
+
+# Easy Way to Remember
+
+```text
+DNS
+↓
+ARP
+↓
+TCP Handshake
+↓
+HTTPS Request
+↓
+NAT
+↓
+Routing
+↓
+Response
+↓
+Browser Rendering
+```
+
+---
+
+# Quick Revision
+
+```text
+1. Browser Cache Check
+2. DNS converts domain name to IP.
+3. ARP finds router MAC address.
+4. TCP connection is established.
+5. HTTPS request is sent.
+6. NAT converts private IP to public IP.
+7. Routers forward packets.
+8. Google processes the request.
+9. Response comes back.
+10. Browser renders the page.
+```
 
