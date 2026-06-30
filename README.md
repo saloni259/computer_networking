@@ -1001,3 +1001,874 @@ Spotify     → Port 5002
 
 ### **Socket -**
 **Socket as ```Communication Endpoint```. Applications send/receive data through sockets.**
+
+
+## **Checksum Calculation**
+**Sender calculates a special value**
+
+***Examples -***
+```
+Data = HELLO
+Checksum = XYZ
+```
+**Sender sends :**
+```
+HELLO + XYZ
+```
+**Receiver receives :**
+```
+HELLO + XYZ
+```
+**and recalculates checksum**
+<br>
+- **If ```Calculated Checksum == Received Checksum``` then ```Probably No Error```**
+- **If ```Calculated Checksum != Received Checksum``` then ```Packet Corrupted```**
+
+
+***Note -*** 
+- **Checksum does not correct errors it detects error**
+- **UDP doesn't guarantee delivery.
+But still reciver wants to know ''Did packet get corrupted?'' Checksum provides that information**
+
+## **TCP(Transmission Control Protocol)**
+
+### ***TCP Connection***
+**TCP establish a connection before sending a data. This is known as 3 way handshake**
+
+### ***Full Duplex***
+**Both sides can send and receive simultaneously.**
+```
+User1 ----message 1----> User 2
+User1 <----message 2---- User 2
+```
+### ***Point-to-Point***
+**TCP connection is**
+```
+one Sender
+onr Reciever
+```
+**TCP does not support**
+```
+One Sender
+↓
+100 Receivers
+```
+**This is multicasting**
+
+### ***TCP Buffers***
+**Sender Buffer and Reciever Buffer**
+
+#### ***Why buffers are needed?***
+**Suppose application generates data faster than network can send.**
+<br>
+***Example -***
+<br>
+**Suppose 100mb file and network can only send 1mb/sec. Need temporary storage known as ```Buffer```.**
+
+#### ***Send Buffer***
+**Application generates data faster than network can send**
+```
+Application
+      ↓
+Send Buffer
+      ↓
+TCP
+      ↓
+Network
+```
+#### ***Recieve Buffer***
+**Suppose packets arrive quickly and application busy. So Packets wait in recieve Buffer**
+```
+Network
+    ↓
+TCP
+    ↓
+Receive Buffer
+    ↓
+Application
+```
+
+***Note -*** **TCP does not send data immediately. It stores data in send buffer. Then sends data when it appropriate**
+
+### ***MSS (Maximum Segment Size)***
+**Maximum amount of application data in one TCP segment.**
+<br>
+***Example -***
+```
+MSS = 1460 bytes
+Total = 5000 bytes
+becomes:
+1460
+1460
+1460
+620
+```
+### ***Why TCP is reliable?***
+- **Sequence Numbers**
+- **Acknowledgements**
+- **Retransmissions**
+- **Flow Control**
+
+### ***TCP Segment Structure***
+```
+------------------------------------------------
+| Source Port | Destination Port              |
+------------------------------------------------
+| Sequence Number                             |
+------------------------------------------------
+| Acknowledgement Number                      |
+------------------------------------------------
+| HeaderLen | Flags | Window Size            |
+------------------------------------------------
+| Checksum | Urgent Pointer                  |
+------------------------------------------------
+| Data                                         |
+------------------------------------------------
+```
+### **Source Port**
+**Which application sent this.**
+<br>
+***Example -***
+```
+Chrome → Port 50000
+```
+
+### **Destination Port**
+**Which application should receive it?**
+<br>
+***Examples -***
+```
+HTTPS Server - 443
+```
+
+### **Sequence Number**
+**Suppose file ```ABCDEFGH``` is split into ```ABC,DEF,GH``` and Network may deliver ```DEF,GH,ABC```. How does reciever rearrange this? So need numbering.**
+<br>
+
+***Example -***
+<br>
+**TCP labels bytes.**
+```
+A = 0
+B = 1
+C = 2
+D = 3
+E = 4
+F = 5
+G = 6
+H = 7
+```
+**Segments and sequence number**
+```
+ABC - 0
+DEF - 3
+GH - 6
+```
+**Sequence Number = Byte number of the first byte carried by the segment.**
+
+### ***Initial Sequence Number (ISN)***
+**Why doesn't TCP always start from 0?**
+
+
+***Examples -***
+
+
+**Old connection: ```seq 0```**
+<br>
+**New Connection: ```seq 0```**
+<br>
+**Some delayed packet of lod connecton still in network .so in new connction reciever may confuse with old and new packets.**
+<br>
+
+***Solution -***
+<br>
+**TCP choose a random Initial Sequence Number (ISN) instead of 0 .**
+
+### **Acknowledgement Number**
+**ACK Number means = Next byte expected by receiver.**
+<br>
+
+***Example -***
+```
+Received: 0-499
+ACK: 500
+Meaning: Send byte 500 next.
+```
+### ***Why Sequence + ACK Together?***
+***Examples -***
+<br>
+
+**Suppose :**
+```
+Packet 3 lost
+```
+**Receiver receives :**
+```
+Packet 1
+Packet 2
+Packet 4
+```
+**Receiver sends :**
+```
+ACK = Start of Packet 3
+```
+**TCP knows :**
+```
+Packet 3 missing
+```
+**and retransmits it. This is the basis of TCP reliability.**
+
+### ***Cumulative Acknowledgement*** 
+**TCP acknowledges everything up to the first missing byte.**
+<br>
+
+***Example -***
+<br>
+**Received**
+```
+0-99
+100-199
+200-299
+```
+**Then :**
+```
+ACK = 300
+```
+**If :**
+```
+300-399 Lost
+400-499 Received
+500-599 Received
+```
+**Still :**
+```
+ACK = 300
+```
+### **Receive Window (Window Size)**
+**Purpose : flow control**
+<br>
+**Receiver tells sender :**
+```
+I can currently handle
+5000 bytes
+```
+### ***Header Length***
+**Purpose :**
+<br>
+**Tells receiver:**
+```
+Where header ends
+Where actual data starts
+```
+### ***Flags***
+- ***SYN flag -*** **Connection Establishment or 3 way handshake**
+- ***ACK flag -*** **Acknowledgement**
+- ***FIN flag -*** **Connection Termination (4 way handshake)**
+- ***RST flag -*** **Connection Error or immediate reset**
+- ***PSH flag -*** **Deliver data immediately**
+- ***URG flag -*** **Urgent Data Present**
+
+## **RTT(Round Trip Time) & Timeout**
+
+#### ***The Problem -***
+**Suppose sender sends ```Packet A```. What should it do now ?**
+```
+Option 1 : Wait forever (Bad)
+Option 2 : Resend after 1 millisecond (Also bad. Maybe packet is still travelling.)
+```
+
+#### ***Defination of Round Trip Time -***
+**Time taken for ```Sender--->Reciever``` and ```Reciever--->Sender ACK``` is known as RTT**
+
+### ***EstimatedRTT -***
+**Different packet may be have different RTT. So we need to calculate an AvgRTT. so that we can decide how many times we have to wait.**
+<br>
+
+***Example -***
+```
+100 ms
+120 ms
+90 ms
+200 ms
+150 ms
+```
+**So TCP maintains an average ```EstimatedRTT```**
+```
+EstimatedRTT = (1-alpha)×EstimatedRTT + alpha×SampleRTT
+```
+
+### ***DevRTT -***
+**How much RTT varies**
+<br>
+
+***Examples -***
+<br>
+
+**Stable Network**
+```
+100
+101
+99
+100
+
+Variation : Very small
+DevRTT small
+```
+**Unstable Network**
+```
+50
+250
+80
+300
+
+Variation : Huge
+DevRTT large
+```
+### ***Timeout Interval***
+```
+Timeout = EstimatedRTT + 4×DevRTT
+```
+***Examples -***
+<br>
+**Suppose :**
+```
+EstimatedRTT = 100 ms
+DevRTT = 20 ms
+```
+**Then :**
+```
+Timeout = 100 + 4×20 = 180 ms
+```
+**TCP waits 180 ms for ACK**
+- **If ACK arrives Before 180 ms. It good**
+- **If ACK doesn't arrive After 180 ms. TCP assumes Packet Lost and retransmits.**
+
+### ***TCP Flow Control***
+
+#### ***Problem -***
+**Suppose sender speed ```100 MB/sec``` but receiver can process only ```10 MB/sec```. So sender keeps transmitting and Receiver cannot keep up. Eventually Receiver Buffer Full and and packets start getting dropped.**
+#### ***Solution -*** **Flow Control**
+**Preventing the sender from overwhelming the receiver.**
+
+### ***How TCP Solves This?***
+**TCP uses ```Receive Window (rwnd)```**.
+<br>
+**rwnd -** **Receiver tells sender ```I currently have
+X bytes free.```**
+
+***Examples -***
+
+**Suppose receiver buffer ```Capacity = 10000 Bytes```. currently used ```4000 Bytes``` and free ```6000 Byets```. Reciever sends ```rwnd = 6000```**
+<br>
+**It is dynamic in nature.**
+
+
+### ***Zero Window Problem***
+
+#### ***Situation -***
+**Receiver buffer becomes full. Receiver advertises ```rwnd = 0``` meaning ```Stop sending```. 
+**Receiver buffer becomes full. Receiver advertises ```rwnd = 0``` meaning ```Stop sending```. Sender stops. Now receiver starts processing data. Buffer becomes free.**
+<br>
+
+***Problem -***
+```
+How does sender know
+buffer is free now?
+```
+***TCP Solution -***
+<br>
+**TCP periodically sends tiny packets. These are called window probes. Eventually receiver replies: ```rwnd = 5000``` and Sender resumes transmission.**
+
+### ***Difference Between Flow Control and Congestion Control***
+***Flow Control -*** **Concern: Receiver Capacity**
+<br>
+**Congestion Control -** **Concern: Network Capacity**
+
+# TCP Connection Management (3-Way Handshake)
+
+## Why do we need a handshake?
+
+Before sending actual data, both sides need to make sure that:
+
+* The receiver is available.
+* Both sides can communicate with each other.
+* Initial sequence numbers are exchanged.
+
+---
+
+## 3-Way Handshake Steps
+
+```text
+SYN
+SYN-ACK
+ACK
+```
+
+---
+
+### Step 1: SYN
+
+Client sends:
+
+```text
+SYN
+Seq = 100
+```
+
+Meaning:
+
+> I want to establish a connection and my starting sequence number is 100.
+
+`SYN` stands for:
+
+```text
+Synchronize Sequence Numbers
+```
+
+---
+
+### Step 2: SYN + ACK
+
+Server replies:
+
+```text
+SYN
+ACK
+Seq = 500
+ACK = 101
+```
+
+Meaning:
+
+* Server received the SYN.
+* Server accepts the connection.
+* Server's sequence number starts from 500.
+* Server expects byte 101 next.
+
+Why ACK = 101?
+
+```text
+SYN consumes one sequence number.
+
+100 + 1 = 101
+```
+
+---
+
+### Step 3: ACK
+
+Client sends:
+
+```text
+ACK
+Seq = 101
+ACK = 501
+```
+
+Meaning:
+
+* Client received the server's SYN.
+* Client expects byte 501 next.
+
+---
+
+## Diagram
+
+```text
+Client                    Server
+
+SYN Seq=100
+------------------------->
+
+               SYN+ACK
+      Seq=500 ACK=101
+<-------------------------
+
+ACK
+Seq=101 ACK=501
+------------------------->
+
+Connection Established
+```
+
+---
+
+## Example
+
+Phone call example:
+
+```text
+You: Hello?
+Friend: Hello.
+You: Can you hear me?
+Friend: Yes.
+```
+
+After confirmation, the conversation starts.
+
+---
+
+## Why not 2-Way Handshake?
+
+If only:
+
+```text
+SYN
+SYN+ACK
+```
+
+were exchanged, the server would never know whether the client actually received the `SYN+ACK`.
+
+The final ACK confirms this.
+
+---
+
+## Why not 4-Way Handshake?
+
+TCP combines:
+
+```text
+SYN + ACK
+```
+
+into a single packet, reducing the number of steps from 4 to 3.
+
+---
+
+## Quick Revision
+
+```text
+SYN     -> Start connection
+SYN+ACK -> Accept connection
+ACK     -> Confirmation
+```
+
+---
+
+# TCP Connection Termination (4-Way Handshake)
+
+After communication finishes, TCP closes the connection using four steps.
+
+---
+
+### Step 1: FIN
+
+Client sends:
+
+```text
+FIN
+Seq = 100
+```
+
+Meaning:
+
+> I have finished sending data.
+
+---
+
+### Step 2: ACK
+
+Server replies:
+
+```text
+ACK = 101
+```
+
+Meaning:
+
+> I received your FIN.
+
+The server may still have some data left to send.
+
+---
+
+### Step 3: FIN
+
+After sending its remaining data, the server sends:
+
+```text
+FIN
+Seq = 500
+```
+
+Meaning:
+
+> I have also finished sending data.
+
+---
+
+### Step 4: ACK
+
+Client replies:
+
+```text
+ACK = 501
+```
+
+Meaning:
+
+> I received your FIN.
+
+Connection closes.
+
+---
+
+## Diagram
+
+```text
+Client                          Server
+
+FIN Seq=100
+------------------------------->
+
+                     ACK=101
+<-------------------------------
+
+                     FIN Seq=500
+<-------------------------------
+
+ACK=501
+------------------------------->
+
+Connection Closed
+```
+
+---
+
+## Why does TCP need 4 steps?
+
+During connection setup:
+
+```text
+SYN + ACK
+```
+
+can be combined.
+
+During termination, one side may still have data left to send, so:
+
+```text
+ACK
+```
+
+and
+
+```text
+FIN
+```
+
+cannot always be sent together.
+
+---
+
+## FIN vs ACK
+
+### FIN
+
+```text
+I won't send any more data.
+```
+
+### ACK
+
+```text
+I received your message.
+```
+
+---
+
+## TIME_WAIT State
+
+After sending the final ACK, the client waits for some time before completely closing the connection.
+
+Reason:
+
+If the last ACK gets lost, the server may send FIN again and the client should still be able to respond.
+
+---
+
+## Quick Revision
+
+```text
+FIN -> I am done sending.
+ACK -> I received your message.
+```
+
+---
+
+# TCP Congestion Control
+
+Congestion control prevents the network from becoming overloaded.
+
+---
+
+## Example
+
+Suppose a road can handle:
+
+```text
+1000 cars/minute
+```
+
+but suddenly:
+
+```text
+5000 cars/minute
+```
+
+try to use it.
+
+Result:
+
+```text
+Traffic Jam
+```
+
+The same thing happens in computer networks.
+
+---
+
+## Congestion Window (cwnd)
+
+TCP uses:
+
+```text
+cwnd
+```
+
+to decide how much data can be sent into the network at one time.
+
+---
+
+## Example
+
+Suppose:
+
+```text
+cwnd = 3 packets
+```
+
+Sender sends:
+
+```text
+Packet 1
+Packet 2
+Packet 3
+```
+
+and waits for ACKs before sending more packets.
+
+---
+
+## Formula
+
+```text
+Data in Transit <= min(rwnd, cwnd)
+```
+
+where:
+
+```text
+rwnd = Receiver Window
+cwnd = Congestion Window
+```
+
+---
+
+## Slow Start
+
+Initially:
+
+```text
+cwnd = 1
+```
+
+After every RTT:
+
+```text
+1 -> 2 -> 4 -> 8 -> 16
+```
+
+The congestion window doubles every round trip time.
+
+---
+
+## Why is it called Slow Start?
+
+Because TCP starts with only one packet instead of flooding the network immediately.
+
+---
+
+## Congestion Detection
+
+If TCP detects:
+
+```text
+Timeout
+or
+Duplicate ACKs
+```
+
+it assumes congestion in the network and reduces `cwnd`.
+
+---
+
+## Congestion Avoidance
+
+Instead of increasing exponentially:
+
+```text
+1 -> 2 -> 4 -> 8 -> 16
+```
+
+TCP starts increasing slowly:
+
+```text
+16 -> 17 -> 18 -> 19
+```
+
+---
+
+## Fast Retransmit
+
+Suppose sender receives:
+
+```text
+ACK = 500
+ACK = 500
+ACK = 500
+```
+
+three times.
+
+TCP immediately retransmits the missing packet without waiting for timeout.
+
+---
+
+## Fast Recovery
+
+After Fast Retransmit, TCP reduces the congestion window partially instead of resetting it to 1.
+
+---
+
+## Flow Control vs Congestion Control
+
+| Flow Control      | Congestion Control |
+| ----------------- | ------------------ |
+| Protects receiver | Protects network   |
+| Uses rwnd         | Uses cwnd          |
+| Receiver issue    | Network issue      |
+
+---
+
+## Quick Revision
+
+```text
+rwnd -> Receiver limitation
+cwnd -> Network limitation
+
+Flow Control -> Protect receiver
+Congestion Control -> Protect network
+```
+
+
